@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Language Switch Website</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    /* Language switch box */
+    .lang-switch {
+      display: inline-flex;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid #d0d7de;
+      margin-bottom: 30px;
+    }
+
+    .lang-btn {
+      width: 110px;
+      height: 38px;
+      border-radius: 20px;
+      border: none;
+      background: transparent;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .lang-btn:hover {
+      background: #e5e7eb;
+    }
+
+    .lang-btn.active {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Language Buttons -->
+    <div class="lang-switch">
+      <button class="lang-btn" onclick="changeLang('en')">English</button>
+      <button class="lang-btn" onclick="changeLang('bn')">বাংলা</button>
+    </div>
+
+    <!-- Content -->
+    <h1 id="title"></h1>
+    <p id="desc"></p>
+
+  </div>
+
+  <script>
+    const content = {
+      en: {
+        title: "Welcome to our website",
+        desc: "This website supports multiple languages."
+      },
+      bn: {
+        title: "আমাদের ওয়েবসাইটে স্বাগতম",
+        desc: "এই ওয়েবসাইটে একাধিক ভাষা সাপোর্ট করে।"
+      }
+    };
+
+    function changeLang(lang) {
+      document.documentElement.lang = lang;
+
+      document.getElementById("title").innerText = content[lang].title;
+      document.getElementById("desc").innerText = content[lang].desc;
+
+      document.querySelectorAll(".lang-btn").forEach(btn =>
+        btn.classList.remove("active")
+      );
+
+      document
+        .querySelector(`button[onclick="changeLang('${lang}')"]`)
+        .classList.add("active");
+
+      localStorage.setItem("siteLang", lang);
+    }
+
+    // Load saved language
+    const savedLang = localStorage.getItem("siteLang") || "en";
+    changeLang(savedLang);
+  
+  </script>
+
+</body>
+</html>
+
